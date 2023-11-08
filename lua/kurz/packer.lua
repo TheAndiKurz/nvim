@@ -1,7 +1,10 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
+-- install packer
+local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
 
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+    vim.fn.execute("!git clone git@github.com:wbthomason/packer.nvim " .. install_path)
+    vim.cmd [[packadd packer.nvim]]
+end
 
 return require('packer').startup(function(use)
     -- Packer can manage itself
@@ -57,20 +60,27 @@ return require('packer').startup(function(use)
         }
     }
 
-    -- themes
-    use({
-        'rose-pine/neovim',
-        as = 'rose-pine',
-        config = function()
-            vim.cmd('colorscheme rose-pine')
+   use {
+        "numToStr/Comment.nvim",
+        config = function ()
+            require('Comment').setup()
         end
-    })
+    }
 
+    -- themes
     use({
         "Shatur/neovim-ayu",
         as = "ayu",
         config= function()
             vim.cmd('colorscheme ayu')
+        end
+    })
+
+    use({
+        'rose-pine/neovim',
+        as = 'rose-pine',
+        config = function()
+            vim.cmd('colorscheme rose-pine')
         end
     })
 
