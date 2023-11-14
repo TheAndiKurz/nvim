@@ -71,14 +71,6 @@ return require('packer').startup(function(use)
 
     -- themes
     use({
-        "Shatur/neovim-ayu",
-        as = "ayu",
-        config= function()
-            vim.cmd('colorscheme ayu')
-        end
-    })
-
-    use({
         'rose-pine/neovim',
         as = 'rose-pine',
         config = function()
