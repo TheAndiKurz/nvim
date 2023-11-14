@@ -1,9 +1,11 @@
-function ColorMyPencils(color)
-	color = color or "ayu"
+Theme = ""
 
-	vim.cmd.colorscheme(color)
+function SetColorTheme(theme)
+    Theme = theme
+
+	vim.cmd.colorscheme(theme)
 end
 
 
 -- ColorMyPencils("ayu")
-ColorMyPencils("rose-pine")
+SetColorTheme("rose-pine")

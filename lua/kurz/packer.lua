@@ -60,7 +60,9 @@ return require('packer').startup(function(use)
         }
     }
 
-   use {
+    use "lukas-reineke/indent-blankline.nvim"
+
+    use {
         "numToStr/Comment.nvim",
         config = function ()
             require('Comment').setup()
@@ -85,7 +87,6 @@ return require('packer').startup(function(use)
     })
 
     -- statusbar
-    use("feline-nvim/feline.nvim", {
-        requires = { "nvim-tree/nvim-web-devicons" }
-    })
+    use "nvim-lualine/lualine.nvim"
+
 end)
