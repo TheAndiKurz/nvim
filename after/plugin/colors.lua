@@ -7,5 +7,5 @@ function SetColorTheme(theme)
 end
 
 
--- ColorMyPencils("ayu")
-SetColorTheme("rose-pine")
+-- SetColorTheme("rose-pine")
+SetColorTheme("gruvbox")
