@@ -77,22 +77,6 @@ return require('packer').startup(function(use)
         end
     })
 
-    use {
-        "ellisonleao/gruvbox.nvim",
-        as = "gruvbox",
-        config = function()
-            vim.cmd "colorscheme gruvbox"
-        end
-    }
-    
-    use {
-        "maxmx03/dracula.nvim",
-        as = "dracula",
-        config = function()
-            vim.cmd "colorscheme dracula"
-        end
-    }
-
     -- statusbar
     use "nvim-lualine/lualine.nvim"
 

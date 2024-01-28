@@ -7,4 +7,4 @@ function SetColorTheme(theme)
 end
 
 
-SetColorTheme("dracula")
+SetColorTheme("rose-pine")
