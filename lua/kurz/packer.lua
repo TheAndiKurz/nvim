@@ -84,6 +84,14 @@ return require('packer').startup(function(use)
             vim.cmd "colorscheme gruvbox"
         end
     }
+    
+    use {
+        "maxmx03/dracula.nvim",
+        as = "dracula",
+        config = function()
+            vim.cmd "colorscheme dracula"
+        end
+    }
 
     -- statusbar
     use "nvim-lualine/lualine.nvim"
