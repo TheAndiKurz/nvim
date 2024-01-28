@@ -28,7 +28,7 @@ return require('packer').startup(function(use)
 
     use("nvim-treesitter/playground")
 
-    use("theprimeagen/harpoon")
+    use { "theprimeagen/harpoon", branch = "harpoon2" }
 
     use("mbbill/undotree")
 
