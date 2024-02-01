@@ -1,5 +1,8 @@
 vim.opt.guicursor = "n-v:block,i:ver25,r:hor25"
 
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
