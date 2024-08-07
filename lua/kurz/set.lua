@@ -20,8 +20,10 @@ vim.opt.backup = false
 
 local home = os.getenv("HOME")
 
+-- windows settings
 if home == nil then
     home = os.getenv("USERPROFILE")
+    vim.opt.shell = "pwsh.exe"
 end
 
 vim.opt.undodir = home .. "/.vim/undodir"
