@@ -18,3 +18,5 @@ vim.keymap.set("n", "<C-d>", ":bd<CR>")
 -- open the command history with <leader>.
 vim.keymap.set("n", "<leader>.", "q:")
 
+-- search and replace word under cursor in file
+vim.keymap.set("n", "<leader>sr", ":%s/<C-r><C-w>//g<Left><Left>")
