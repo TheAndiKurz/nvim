@@ -4,7 +4,7 @@ lsp.preset("recommended")
 
 lsp.ensure_installed({
     'gopls',
-    'lua-language-server',
+    'lua_ls',
 })
 
 -- Fix Undefined global 'vim'
