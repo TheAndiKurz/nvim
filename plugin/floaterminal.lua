@@ -50,8 +50,10 @@ local toggle_terminal = function()
   end
 end
 
--- Example usage:
 -- Create a floating window with default dimensions
 vim.api.nvim_create_user_command("Floaterminal", toggle_terminal, {})
 
+-- keymaps for termial
 vim.keymap.set("n", "<leader>t", toggle_terminal)
+
+vim.keymap.set("t", "<esc>", "<C-\\><C-n>")
