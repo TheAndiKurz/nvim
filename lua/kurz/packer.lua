@@ -26,6 +26,10 @@ return require('packer').startup(function(use)
         end,
     }
 
+    use {
+        'nvim-treesitter/nvim-treesitter-context',
+    }
+
     use("nvim-treesitter/playground")
 
     use {
