@@ -1,9 +1,9 @@
 vim.g.mapleader = " "
 
 -- open explorer with <leader>e
-vim.keymap.set("n", "<leader>d", vim.cmd.Ex)
-vim.keymap.set("n", "<leader>hd", ":Sex<CR>")
-vim.keymap.set("n", "<leader>vd", ":Vex<CR>")
+vim.keymap.set("n", "<leader>e", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>he", ":Sex<CR>")
+vim.keymap.set("n", "<leader>ve", ":Vex<CR>")
 
 -- close the current buffer with <C-d>
 vim.keymap.set("n", "<C-d>", ":bd<CR>")

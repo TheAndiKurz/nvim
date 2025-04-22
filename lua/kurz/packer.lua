@@ -88,6 +88,16 @@ return require('packer').startup(function(use)
     -- statusbar
     use "nvim-lualine/lualine.nvim"
 
-
     use "fatih/vim-go"
+
+    -- debugger
+    use {
+        "mfussenegger/nvim-dap",
+        requires = {
+            {"nvim-neotest/nvim-nio"},
+            {"rcarriga/nvim-dap-ui"},
+            {"theHamsta/nvim-dap-virtual-text"},
+            {"leoluz/nvim-dap-go"}
+        },
+    }
 end)
