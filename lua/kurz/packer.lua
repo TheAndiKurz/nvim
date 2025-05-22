@@ -45,11 +45,11 @@ return require('packer').startup(function(use)
     use("fladson/vim-kitty")
 
     use {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v1.x',
+        'neovim/nvim-lspconfig',
         requires = {
+            {"j-hui/fidget.nvim"},
+
             -- LSP Support
-            {'neovim/nvim-lspconfig'},
             {'williamboman/mason.nvim'},
             {'williamboman/mason-lspconfig.nvim'},
 
@@ -75,6 +75,9 @@ return require('packer').startup(function(use)
             require('Comment').setup()
         end
     }
+
+    -- git
+    use "lewis6991/gitsigns.nvim"
 
     -- themes
     use({

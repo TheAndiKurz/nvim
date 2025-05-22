@@ -1,57 +1,86 @@
-local lsp = require("lsp-zero")
+local cmp_lsp = require("cmp_nvim_lsp")
+local capabilities = vim.tbl_deep_extend(
+    "force",
+    {},
+    vim.lsp.protocol.make_client_capabilities(),
+    cmp_lsp.default_capabilities())
 
-lsp.preset("recommended")
-
-lsp.ensure_installed({
-    'gopls',
-    'lua_ls',
-})
-
--- Fix Undefined global 'vim'
-lsp.nvim_workspace()
-
-
-local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
-local cmp_mappings = lsp.defaults.cmp_mappings({
-  ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-  ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-  ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-  ["<C-Space>"] = cmp.mapping.complete(),
-})
-
-cmp_mappings['<Tab>'] = nil
-
-lsp.setup_nvim_cmp({
-  mapping = cmp_mappings
-})
-
-lsp.set_preferences({
-    suggest_lsp_servers = false,
-    sign_icons = {
-        error = 'E',
-        warn = 'W',
-        hint = 'H',
-        info = 'I'
+require("fidget").setup({})
+require("mason").setup()
+require("mason-lspconfig").setup({
+    ensure_installed = {
+        "gopls",
+        "lua_ls",
+        "ols",
+        "ts_ls",
+    },
+    handlers = {
+        function(server_name) -- default handler (optional)
+            require("lspconfig")[server_name].setup {
+                capabilities = capabilities
+            }
+        end,
+        ["lua_ls"] = function()
+            local lspconfig = require("lspconfig")
+            lspconfig.lua_ls.setup {
+                capabilities = capabilities,
+                settings = {
+                    Lua = {
+                        format = {
+                            enable = true,
+                            -- Put format options here
+                            -- NOTE: the value should be STRING!!
+                            defaultConfig = {
+                                indent_style = "space",
+                                indent_size = "2",
+                            }
+                        },
+                    }
+                }
+            }
+        end,
     }
 })
 
-lsp.on_attach(function(client, bufnr)
-  local opts = {buffer = bufnr, remap = false}
+local cmp = require('cmp')
+local cmp_select = {behavior = cmp.SelectBehavior.Select}
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        end,
+    },
+    mapping = cmp.mapping.preset.insert({
+        ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+        ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+        ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+        ["<C-Space>"] = cmp.mapping.complete(),
+    }),
+    sources = cmp.config.sources({
+        { name = "copilot", group_index = 2 },
+        { name = "nvim_lsp" },
+        { name = "luasnip" }, -- For luasnip users.
+    }, {
+        { name = "buffer" },
+    })
+})
 
-  vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-  vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-  vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-  vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.setloclist() end, opts)
-  vim.keymap.set("n", "[d", function() vim.diagnostic.jump({count=1, float=true}) end, opts)
-  vim.keymap.set("n", "]d", function() vim.diagnostic.jump({count=-1, float=true}) end, opts)
-  vim.keymap.set("n", "<leader>la", function() vim.lsp.buf.code_action() end, opts)
-  vim.keymap.set("n", "<leader>lr", function() vim.lsp.buf.references() end, opts)
-  vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, opts)
-  vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-end)
-
-lsp.setup()
+vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(e)
+        local opts = {buffer = e.buf}
+        local builtin = require "telescope.builtin"
+        vim.keymap.set("n", "<leader>ld", builtin.lsp_definitions, opts)
+        vim.keymap.set("n", "<leader>lr", builtin.lsp_references, opts)
+        vim.keymap.set("n", "<leader>li", builtin.lsp_implementations, opts)
+        vim.keymap.set("n", "<leader>ls", builtin.lsp_document_symbols, opts)
+        vim.keymap.set("n", "<leader>lws", builtin.lsp_workspace_symbols, opts)
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        vim.keymap.set("n", "<leader>lvd", builtin.diagnostics, opts)
+        vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, opts)
+        vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
+        vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+    end
+})
 
 vim.diagnostic.config({
     virtual_text = true
