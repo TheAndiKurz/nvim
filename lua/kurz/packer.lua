@@ -91,8 +91,6 @@ return require('packer').startup(function(use)
     -- statusbar
     use "nvim-lualine/lualine.nvim"
 
-    use "fatih/vim-go"
-
     -- debugger
     use {
         "mfussenegger/nvim-dap",
