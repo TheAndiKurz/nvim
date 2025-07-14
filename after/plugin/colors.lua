@@ -7,4 +7,4 @@ function SetColorTheme(theme)
 end
 
 
-SetColorTheme("rose-pine")
+SetColorTheme("gruvbox")

@@ -12,7 +12,6 @@ require("mason-lspconfig").setup({
         "gopls",
         "lua_ls",
         "ols",
-        "ts_ls",
     },
     handlers = {
         function(server_name) -- default handler (optional)
