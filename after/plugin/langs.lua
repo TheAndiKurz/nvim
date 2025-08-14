@@ -15,11 +15,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- odin
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.odin",
-  callback = function()
-    vim.lsp.buf.format({ async = false })
-  end,
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+    pattern = { "*.odin" },
+    callback = function ()
+        vim.opt.expandtab = false
+    end
 })
 
 -- typescript
