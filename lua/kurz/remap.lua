@@ -12,13 +12,15 @@ vim.keymap.set("n", "<leader>.", "q:")
 vim.keymap.set("n", "<leader>sr", ":%s/<C-r><C-w>//g<Left><Left>")
 
 -- Yanking
-vim.keymap.set({ 'n', 'v' }, 'y', '"+y')
-vim.keymap.set('n', 'yy', '"+yy')
-vim.keymap.set('n', 'Y', '"+Y')
+vim.keymap.set({ "n", "v" }, "y", "\"+y")
+vim.keymap.set("n", "yy", "\"+yy")
+vim.keymap.set("n", "Y", "\"+Y")
 
 -- Pasting
-vim.keymap.set({ 'n', 'v' }, 'p', '"+p')
-vim.keymap.set({ 'n', 'v' }, 'P', '"+P')
+vim.keymap.set({ "n", "v" }, "p", "\"+p")
+vim.keymap.set({ "n", "v" }, "P", "\"+P")
 
--- Deleting (I really dislike this more times then I like it...)
--- vim.keymap.set({'n', 'v'}, 'd', '"+d')
+-- Deleting
+vim.keymap.set({ "n", "v" }, "d", "\"+d")
+vim.keymap.set("n", "dd", "\"+dd")
+vim.keymap.set("n", "D", "\"+D")

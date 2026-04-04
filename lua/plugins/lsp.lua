@@ -79,7 +79,7 @@ return {
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
                 vim.keymap.set("n", "<leader>d", builtin.diagnostics, opts)
                 vim.keymap.set("n", "g.", vim.lsp.buf.code_action, opts)
-                vim.keymap.set("n", "F2", vim.lsp.buf.rename, opts)
+                vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
                 vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
 
                 vim.api.nvim_create_autocmd("BufWritePre", {
