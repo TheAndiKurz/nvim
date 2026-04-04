@@ -6,7 +6,7 @@ return {
         config = function()
             local parsers = {
                 "vimdoc", "javascript", "typescript", "c", "lua", "rust",
-                "jsdoc", "bash",
+                "jsdoc", "bash", "haskell"
             }
 
             vim.defer_fn(function()
