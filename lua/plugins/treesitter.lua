@@ -5,25 +5,27 @@ return {
         build = ":TSUpdate",
         config = function()
             local parsers = {
-                "vimdoc", "javascript", "typescript", "c", "lua", "rust",
-                "jsdoc", "bash", "haskell"
+                "typescript",
+                "go",
+                "nu",
+                "bash",
+                "vimdoc",
+                "lua",
             }
 
-            vim.defer_fn(function()
-                require("nvim-treesitter").install(parsers)
-            end, 1000)
+            require("nvim-treesitter").install(parsers)
 
             vim.api.nvim_create_autocmd("FileType", {
-                callback = function(event)
-                    pcall(vim.treesitter.start, event.buf)
+                callback = function()
+                    pcall(vim.treesitter.start)
                 end,
             })
         end
     },
-
     {
         "nvim-treesitter/nvim-treesitter-context",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
+        after = "nvim-treesitter",
         config = function()
             require('treesitter-context').setup {
                 enable = true,            -- Enable this plugin

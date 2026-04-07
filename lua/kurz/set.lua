@@ -6,6 +6,14 @@ vim.opt.splitright = true
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
+if string.match(vim.o.shell, "nu$") then
+    vim.opt.shellcmdflag = "-l -c"
+    vim.opt.shellredir = "out+err> %s"
+    vim.opt.shellpipe = "out+err> %s"
+    vim.opt.shellquote = ""
+    vim.opt.shellxquote = ""
+end
+
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
@@ -42,3 +50,7 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
+
+if vim.g.neovide then
+    vim.o.guifont = "FiraCode Nerd Font:h13.5"
+end
