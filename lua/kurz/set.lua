@@ -52,5 +52,6 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 
 if vim.g.neovide then
-    vim.o.guifont = "FiraCode Nerd Font:h13.5"
+    vim.o.guifont = "FiraCode Nerd Font:h13"
+    vim.g.neovide_cursor_cell_color_fallback = true
 end
