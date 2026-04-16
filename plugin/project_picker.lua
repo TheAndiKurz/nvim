@@ -4,7 +4,8 @@ local conf = require("telescope.config").values
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 
-local function get_git_repos()
+local function project_picker(opts)
+    opts = opts or {}
     local base_dir = vim.fn.expand("~/git")
 
     -- Command to find .git directories.
@@ -23,13 +24,6 @@ local function get_git_repos()
         local repo_path = git_dir:gsub("/%.git$", "")
         table.insert(repos, repo_path)
     end
-
-    return repos
-end
-
-local function project_picker(opts)
-    opts = opts or {}
-    local repos = get_git_repos()
 
     if #repos == 0 then
         vim.notify("No Git repositories found in ~/git", vim.log.levels.WARN)
