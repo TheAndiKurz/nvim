@@ -170,7 +170,7 @@ vim.g.compile_mode = {
     },
     -- Use `baleia` for parsing ANSI escape codes in the output.
     -- :h compile_mode.baleia_setup
-    baleia_setup = true,
+    baleia_setup = false,
     -- Expand commands, like `:!` (e.g. `:Compile echo %`)
     -- :h compile_mode.bang_expansion
     bang_expansion = true,
