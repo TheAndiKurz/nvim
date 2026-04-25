@@ -254,6 +254,9 @@ require("oil").setup {
     columns = { 'size', 'mtime' },
     delete_to_trash = true,
     skip_confirm_for_simple_edits = true,
+    view_options = {
+        show_hidden = true,
+    },
 }
 
 -- status bar
@@ -423,7 +426,16 @@ vim.lsp.config("lua_ls", {
     }
 })
 
-local enabled_lsps = { "tinymist", "lua_ls", "clangd", "gopls", "ts_ls", "ols", "zls" }
+local enabled_lsps = {
+    "tinymist", -- typst
+    "lua_ls",   -- lua
+    "clangd",   -- c/c++
+    "gopls",    -- go
+    "ts_ls",    -- typescript / tsx
+    "ols",      -- odin
+    "zls",      -- zig
+    "hls",      -- haskell
+}
 for _, lsp in ipairs(enabled_lsps) do
     vim.lsp.enable(lsp)
 end
