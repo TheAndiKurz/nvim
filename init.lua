@@ -24,6 +24,8 @@ vim.pack.add {
     { src = "https://github.com/ThePrimeagen/harpoon",         version = "harpoon2" },
 
     -- lsp
+    "https://github.com/mason-org/mason.nvim",
+    "https://github.com/mason-org/mason-lspconfig.nvim",
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/hrsh7th/cmp-nvim-lsp",
     "https://github.com/j-hui/fidget.nvim",
@@ -246,7 +248,7 @@ vim.g.compile_mode = {
 }
 
 -- theme
-vim.cmd.colorscheme("rose-pine-moon")
+-- vim.cmd.colorscheme("rose-pine-moon")
 
 -- oil
 require("oil").setup {
@@ -405,40 +407,66 @@ local capabilities = vim.tbl_deep_extend(
     vim.lsp.protocol.make_client_capabilities(),
     cmp_lsp.default_capabilities())
 
-vim.lsp.config("*", {
-    capabilities = capabilities,
-})
-vim.lsp.config("lua_ls", {
-    capabilities = capabilities,
-    settings = {
-        Lua = {
-            workspace = {
-                library = vim.api.nvim_get_runtime_file("", true),
-            },
-            format = {
-                enable = true,
-                defaultConfig = {
-                    indent_style = "space",
-                    indent_size = "2",
+require("mason").setup()
+require("mason-lspconfig").setup({
+    ensure_installed = {
+        "tinymist",
+        "clangd",
+        "lua_ls",
+        "gopls",
+        "vtsls",
+        "tailwindcss",
+        "ols",
+        "zls",
+    },
+    handlers = {
+        function(server_name) -- default handler (optional)
+            vim.lsp.config(server_name, {
+                capabilities = capabilities
+            })
+        end,
+
+        zls = function()
+            vim.lsp.config("zls", {
+                root_dir = lspconfig.util.root_pattern(".git", "build.zig", "zls.json"),
+                settings = {
+                    zls = {
+                        enable_inlay_hints = true,
+                        enable_snippets = true,
+                        warn_style = true,
+                    },
+                },
+            })
+            vim.g.zig_fmt_parse_errors = 0
+            vim.g.zig_fmt_autosave = 0
+        end,
+        ["lua_ls"] = function()
+            vim.lsp.config("lua_ls", {
+                capabilities = capabilities,
+                settings = {
+                    Lua = {
+                        workspace = {
+                            library = vim.api.nvim_get_runtime_file("", true),
+                        },
+                        format = {
+                            enable = true,
+                            defaultConfig = {
+                                indent_style = "space",
+                                indent_size = "2",
+                            }
+                        },
+                    }
                 }
-            },
-        }
+            })
+        end,
+        ["tailwindcss"] = function()
+            vim.lsp.config("tailwindcss", {
+                capabilities = capabilities,
+                filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "heex" },
+            })
+        end,
     }
 })
-
-local enabled_lsps = {
-    "tinymist", -- typst
-    "lua_ls",   -- lua
-    "clangd",   -- c/c++
-    "gopls",    -- go
-    "ts_ls",    -- typescript / tsx
-    "ols",      -- odin
-    "zls",      -- zig
-    "hls",      -- haskell
-}
-for _, lsp in ipairs(enabled_lsps) do
-    vim.lsp.enable(lsp)
-end
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(e)
