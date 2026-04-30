@@ -41,7 +41,7 @@ vim.pack.add {
     "https://github.com/nvim-telescope/telescope.nvim",
 
     -- themes
-    "https://github.com/rose-pine/neovim",
+    -- "https://github.com/rose-pine/neovim",
 
     -- treesitter
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
@@ -249,7 +249,7 @@ vim.g.compile_mode = {
 }
 
 -- theme
--- vim.cmd.colorscheme("rose-pine-moon")
+vim.cmd.colorscheme("retrobox")
 
 -- oil
 require("oil").setup {
@@ -420,53 +420,46 @@ require("mason-lspconfig").setup({
         "ols",
         "zls",
     },
-    handlers = {
-        function(server_name) -- default handler (optional)
-            vim.lsp.config(server_name, {
-                capabilities = capabilities
-            })
-        end,
+})
 
-        zls = function()
-            vim.lsp.config("zls", {
-                root_dir = lspconfig.util.root_pattern(".git", "build.zig", "zls.json"),
-                settings = {
-                    zls = {
-                        enable_inlay_hints = true,
-                        enable_snippets = true,
-                        warn_style = true,
-                    },
-                },
-            })
-            vim.g.zig_fmt_parse_errors = 0
-            vim.g.zig_fmt_autosave = 0
-        end,
-        ["lua_ls"] = function()
-            vim.lsp.config("lua_ls", {
-                capabilities = capabilities,
-                settings = {
-                    Lua = {
-                        workspace = {
-                            library = vim.api.nvim_get_runtime_file("", true),
-                        },
-                        format = {
-                            enable = true,
-                            defaultConfig = {
-                                indent_style = "space",
-                                indent_size = "2",
-                            }
-                        },
-                    }
+vim.lsp.config("*", {
+    capabilities = capabilities
+})
+
+vim.lsp.config("zls", {
+    root_markers = { "build.zig", "zls.json", ".git" },
+    settings = {
+        zls = {
+            enable_inlay_hints = true,
+            enable_snippets = true,
+            warn_style = true,
+        },
+    },
+})
+vim.g.zig_fmt_parse_errors = 0
+vim.g.zig_fmt_autosave = 0
+
+vim.lsp.config("lua_ls", {
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            workspace = {
+                library = vim.api.nvim_get_runtime_file("", true),
+            },
+            format = {
+                enable = true,
+                defaultConfig = {
+                    indent_style = "space",
+                    indent_size = "2",
                 }
-            })
-        end,
-        ["tailwindcss"] = function()
-            vim.lsp.config("tailwindcss", {
-                capabilities = capabilities,
-                filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "heex" },
-            })
-        end,
+            },
+        }
     }
+})
+
+vim.lsp.config("tailwindcss", {
+    capabilities = capabilities,
+    filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "heex" },
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
