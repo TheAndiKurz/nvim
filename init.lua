@@ -169,6 +169,7 @@ vim.g.compile_mode = {
     default_command = {
         zig = "zig build",
         odin = "odin build .",
+        cpp = "cd build; cmake ..; make -j"
     },
     -- Use `baleia` for parsing ANSI escape codes in the output.
     -- :h compile_mode.baleia_setup
@@ -187,10 +188,10 @@ vim.g.compile_mode = {
     error_ignore_file_list = {},
     -- The minimum error level to jump to.
     -- :h compile-mode.error_threshold
-    error_threshold = require("compile-mode").level.WARNING,
+    error_threshold = require("compile-mode").level.ERROR,
     -- Automatically jump to the first error.
     -- :h compile-mode.auto_jump_to_first_error
-    auto_jump_to_first_error = true,
+    auto_jump_to_first_error = false,
     -- How long to highlight an error's location when jumping to it.
     -- :h compile-mode.error_locus_highlight
     error_locus_highlight = 500,
