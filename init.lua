@@ -37,11 +37,14 @@ vim.pack.add {
     "https://github.com/nvim-lualine/lualine.nvim",
     "https://github.com/nvim-tree/nvim-web-devicons",
 
+    -- fff
+    "https://github.com/dmtrKovalenko/fff.nvim",
+
     -- telescope
     "https://github.com/nvim-telescope/telescope.nvim",
 
     -- themes
-    -- "https://github.com/rose-pine/neovim",
+    "https://github.com/rose-pine/neovim",
 
     -- treesitter
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
@@ -249,7 +252,8 @@ vim.g.compile_mode = {
 }
 
 -- theme
-vim.cmd.colorscheme("retrobox")
+-- vim.cmd.colorscheme("retrobox")
+vim.cmd.colorscheme("rose-pine-moon")
 
 -- oil
 require("oil").setup {
@@ -268,33 +272,27 @@ require("oil").setup {
 -- status bar
 require("lualine").setup()
 
--- telescope
-local builtin = require('telescope.builtin')
+-- fff
+vim.api.nvim_create_autocmd("PackChanged", {
+    callback = function(ev)
+        local name, kind = ev.data.spec.name, ev.data.kind
+        if name == "fff.nvim" and (kind == "install" or kind == "update") then
+            if not ev.data.active then vim.cmd.packadd("fff.nvim") end
+            require("fff.download").download_or_build_binary()
+        end
+    end,
+})
 
-local function find_files(opts)
-    builtin.find_files(opts)
-end
+vim.g.fff = {
+    lazy_sync = true,
+    debug = { enabled = true, show_scores = true },
+}
 
-local function git_files(opts)
-    builtin.git_files(opts)
-end
+local fff = require("fff")
 
-local function find_buffers(opts)
-    builtin.buffers(opts, {
-        sort_lastused = true,
-    })
-end
-
-local function grep_string()
-    local search = vim.fn.input("Grep > ")
-
-    builtin.grep_string({ search = search })
-end
-
-vim.keymap.set('n', '<C-p>', find_files)
-vim.keymap.set('n', '<C-b>', find_buffers)
-vim.keymap.set('n', '<C-g>', git_files)
-vim.keymap.set('n', '<leader>/', grep_string)
+vim.keymap.set("n", "ff", function() fff.find_files() end, { desc = "FFFind files" })
+vim.keymap.set("n", "fj", function() fff.live_grep() end, { desc = "FFFind live grep" })
+vim.keymap.set("n", "fk", function() fff.live_grep_under_cursor() end, { desc = "FFFind live grep under cursor" })
 
 -- treesitter
 local parsers = {
