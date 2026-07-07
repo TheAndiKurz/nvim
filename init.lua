@@ -253,7 +253,8 @@ vim.g.compile_mode = {
 
 -- theme
 -- vim.cmd.colorscheme("retrobox")
-vim.cmd.colorscheme("rose-pine-moon")
+-- vim.cmd.colorscheme("rose-pine-moon")
+vim.cmd.colorscheme("fleury")
 
 -- oil
 require("oil").setup {
