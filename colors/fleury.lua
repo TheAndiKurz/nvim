@@ -11,7 +11,7 @@ vim.g.colors_name = "fleury"
 
 -- Color palette
 local c = {
-    rich_black                  = "#020202",
+    rich_black                  = "#101010", -- original "#020202"
     light_bronze                = "#b99468",
     charcoal_gray               = "#212121",
     charcoal_gray_lite          = "#1e1e1e",
