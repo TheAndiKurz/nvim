@@ -120,6 +120,9 @@ vim.g.mapleader = " "
 -- open explorer with <leader>e
 vim.keymap.set("n", "<leader>e", vim.cmd.Oil)
 
+-- remove highlights
+vim.keymap.set("n", "nh", ":nohlsearch<ENTER>")
+
 -- use system clipboard always
 vim.keymap.set({ "n", "v" }, "y", "\"+y")
 vim.keymap.set("n", "yy", "\"+yy")
